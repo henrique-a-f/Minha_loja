@@ -5,7 +5,7 @@ from .forms import RegistrationForm, LoginFormulario
 from .models import User
 
 
-@app.route('/admin')
+@app.route('/')
 def admin():
     if 'email' not in session:
         flash(f'Favor fazer seu login primeiro.', 'warning')

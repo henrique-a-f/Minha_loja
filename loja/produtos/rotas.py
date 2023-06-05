@@ -1,8 +1,8 @@
-from flask import redirect, render_template, url_for, flash, request, session
+from flask import redirect, render_template, url_for, flash, request, session, current_app
 from .forms import Addprodutos
 from loja import db, app, photos
 from .models import Marca, Categoria, Addproduto
-import secrets
+import secrets, os  
 
 
 @app.route('/addmarca', methods=['GET','POST'])
@@ -127,6 +127,27 @@ def updateproduto(id):
         produto.stock = form.stock.data
         produto.colors = form.colors.data
         produto.desc = form.discription.data
+
+        if request.files.get('image_1'):
+                try:
+                    os.unlink(os.path.join(current_app.root_path,"static/images" + produto.image_1))
+                    produto.image_1 = photos.save(request.files.get('image_1') ,name=secrets.token_hex(10)+".")
+                except:
+                    produto.image_1 = photos.save(request.files.get('image_1') ,name=secrets.token_hex(10)+".")
+
+        if request.files.get('image_2'):
+                try:
+                    os.unlink(os.path.join(current_app.root_path,"static/images" + produto.image_2))
+                    produto.image_2 = photos.save(request.files.get('image_2') ,name=secrets.token_hex(10)+".")
+                except:
+                    produto.image_2 = photos.save(request.files.get('image_2') ,name=secrets.token_hex(10)+".")
+
+        if request.files.get('image_3'):
+                try:
+                    os.unlink(os.path.join(current_app.root_path,"static/images" + produto.image_3))
+                    produto.image_3 = photos.save(request.files.get('image_3') ,name=secrets.token_hex(10)+".")
+                except:
+                    produto.image_3 = photos.save(request.files.get('image_3') ,name=secrets.token_hex(10)+".")
 
         db.session.commit()
         flash(f'Produto foi atualizado com sucesso', 'success')

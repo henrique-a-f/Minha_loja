@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_uploads import IMAGES,UploadSet,configure_uploads#,patch_request_class
+from flask_uploads import IMAGES,UploadSet,configure_uploads #,patch_request_class
 from flask_bcrypt import Bcrypt
 import os
 

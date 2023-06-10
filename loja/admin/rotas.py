@@ -24,7 +24,7 @@ def marcas():
 
 
 @app.route('/categoria')
-def categoria():
+def categorias():
     if 'email' not in session:
         flash(f'Favor fazer seu login primeiro.', 'warning')
         return redirect(url_for('login'))

@@ -3,10 +3,12 @@
 {% block content %}
 
 {% include '_messages.html' %}
-<div class="container"><nav class="navbar navbar-expand-lg bg-body-tertiary">
+<div class="container">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="/admin">Administrador</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -27,7 +29,9 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Action</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
@@ -44,39 +48,68 @@
   </nav>
 </div>
 <div class="container mt-3">
-    <table class="table table-sm table-striped">
-        <thead>
-            <th>Código</th>
-            <th>Nome</th>
-            
-            <th>Editar</th>
-            <th>Deletar</th>
-        </thead>
+  <table class="table table-sm table-striped">
+    <thead>
+      <th>Código</th>
+      <th>Nome</th>
 
-        <tbody>
-            {% if marcas  %}
-            {% for marca in marcas %}
-            <tr>
-                <td>{{loop.index}}</td>
-                <td>{{marca.name}}</td>
-                
-                <td><a href="{{url_for('updatemarca', id=marca.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
-                <td><a href="" class="btn btn-sm btn-outline-warning">Deletar</a></td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            {% for categoria in categorias %}
-            <tr>
-                <td>{{loop.index}}</td>
-                <td>{{categoria.name}}</td>
-                
-                <td><a href="{{url_for('updatecat', id=categoria.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
-                <td><a href="" class="btn btn-sm btn-outline-warning">Deletar</a></td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-        </tbody>
+      <th>Editar</th>
+      <th>Deletar</th>
+    </thead>
 
-    </table>
+    <tbody>
+      {% if marcas %}
+      {% for marca in marcas %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>{{marca.name}}</td>
+
+        <td><a href="{{url_for('updatemarca', id=marca.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+            data-target="#exampleModal-{{marca.id}}">
+            Deletar
+          </button>
+        </td>
+      </tr>
+
+      <div class="modal fade" id="exampleModal-{{marca.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{marca.name}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <span class="text-danger">Deseja realmente deletar a marca {{marca.name}}?</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <form action="{{url_for('deletemarca', id=marca.id)}}" method="POST">
+                <button type="submit" class="btn btn-danger">Deletar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+      {% else %}
+      {% for categoria in categorias %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>{{categoria.name}}</td>
+
+        <td><a href="{{url_for('updatecat', id=categoria.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
+        <td><a href="" class="btn btn-sm btn-outline-warning">Deletar</a></td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+    </tbody>
+
+  </table>
 </div>
 {% endblock content %}

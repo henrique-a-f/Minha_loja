@@ -68,7 +68,7 @@ def addcat():
     return render_template('/produtos/addmarca.html')
 
 
-@app.route('/updatecat/<int:id>', methods=['GET','POST'])
+@app.route('/updatecat/<int:id>', methods = ['POST', 'GET'])
 def updatecat(id):
     if 'email' not in session:
         flash(f'Favor fazer seu login primeiro.', 'warning')

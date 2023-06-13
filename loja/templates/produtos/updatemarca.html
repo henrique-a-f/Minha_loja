@@ -16,13 +16,15 @@
                 <input type="submit" value="Atualizar marca" class="btn btn-success mt-2">
             
             </form>
+            <a href="{{url_for('marcas')}}" class="btn btn-danger" style="margin-top: -65px; margin-left: 180px;">Cancelar</a>
             {% else %}
             <h2 class="text-center mt-5"> Atualizar Categoria</h2>
             <form action="" method="POST">
-                <input type="text" name="categoria" class="form-control" value="Update categoria">
+                <input type="text" name="categoria" class="form-control" value="{{updatecat.name}}">
                 <input type="submit" value="Update categoria" class="btn btn-success mt-2">
             
             </form>
+            <a href="{{url_for('marcas')}}" class="btn btn-danger" style="margin-top: -65px; margin-left: 180px;">Cancelar</a>
             {% endif %}
         </div>
         <div class="col-md-3"></div>

@@ -4,53 +4,51 @@
 
 {% include '_messages.html' %}
 <div class="container">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/admin">Administrador</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/admin">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/marcas">Marcas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/categoria">Categorias</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/admin">Administrador</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/marcas">Marcas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/categoria">Categorias</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
     </div>
   </nav>
 </div>
 <div class="container mt-3">
   <table class="table table-sm table-striped">
     <thead>
-      <th>Código</th>
+      <th>Serial</th>
       <th>Nome</th>
 
       <th>Editar</th>
@@ -64,38 +62,9 @@
         <td>{{loop.index}}</td>
         <td>{{marca.name}}</td>
 
-        <td><a href="{{url_for('updatemarca', id=marca.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
-        <td>
-          <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-            data-target="#exampleModal-{{marca.id}}">
-            Deletar
-          </button>
-        </td>
+          <td><a href="{{url_for('updatemarca', id=marca.id)}}">Editar</a></td>
+        <td><a href="">Deletar</a></td>
       </tr>
-
-      <div class="modal fade" id="exampleModal-{{marca.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">{{marca.name}}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <span class="text-danger">Deseja realmente deletar a marca {{marca.name}}?</span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <form action="{{url_for('deletemarca', id=marca.id)}}" method="POST">
-                <button type="submit" class="btn btn-danger">Deletar</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {% endfor %}
       {% else %}
       {% for categoria in categorias %}
@@ -103,8 +72,8 @@
         <td>{{loop.index}}</td>
         <td>{{categoria.name}}</td>
 
-        <td><a href="{{url_for('updatecat', id=categoria.id)}}" class="btn btn-sm btn-outline-success">Editar</a></td>
-        <td><a href="" class="btn btn-sm btn-outline-warning">Deletar</a></td>
+        <td><a href="">Editar</a></td>
+        <td><a href="">Deletar</a></td>
       </tr>
       {% endfor %}
       {% endif %}

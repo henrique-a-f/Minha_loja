@@ -1,36 +1,33 @@
-from flask import Flask, render_template, session, request, redirect, url_for, flash
+from flask import render_template, session, request, redirect, url_for, flash
 from loja.produtos.models import Addproduto, Marca, Categoria
 from loja import app, db, bcrypt
 from .forms import RegistrationForm, LoginFormulario
 from .models import User
 
 
-@app.route('/')
+@app.route('/admin')
 def admin():
     if 'email' not in session:
-        flash(f'Favor fazer seu login primeiro.', 'warning')
+        flash(f'Favor fazer seu login primeiro.','warning')
         return redirect(url_for('login'))
     produtos = Addproduto.query.all()
-    return render_template('admin/index.html', title='Página Administrativa', produtos=produtos)
-
+    return render_template('admin/index.html', title="Página Administrativa", produtos=produtos)
 
 @app.route('/marcas')
 def marcas():
     if 'email' not in session:
-        flash(f'Favor fazer seu login primeiro.', 'warning')
+        flash(f'Favor fazer seu login primeiro.','warning')
         return redirect(url_for('login'))
     marcas = Marca.query.order_by(Marca.id.desc()).all()
-    return render_template('admin/marca.html', title='Página Marcas', marcas=marcas)
-
+    return render_template('admin/marca.html', title="Página Marcas", marcas=marcas)
 
 @app.route('/categoria')
-def categorias():
+def categoria():
     if 'email' not in session:
-        flash(f'Favor fazer seu login primeiro.', 'warning')
+        flash(f'Favor fazer seu login primeiro.','warning')
         return redirect(url_for('login'))
     categorias = Categoria.query.order_by(Categoria.id.desc()).all()
     return render_template('admin/marca.html', title='Página Categorias', categorias=categorias)
-
 
 @app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
@@ -44,7 +41,6 @@ def registrar():
         flash(f'Obrigado {form.name.data} por se Registrar', 'success')
         return redirect(url_for('login'))
     return render_template('admin/registrar.html', form=form, title="Página de Registros")
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

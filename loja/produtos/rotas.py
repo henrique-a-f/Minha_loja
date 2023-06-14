@@ -120,12 +120,35 @@ def addproduto():
     return render_template('produtos/addproduto.html', title="Cadastrar Produtos", form=form, marcas=marcas, categorias=categorias)
 
 
-@app.route('/updateproduto/<int:id>', methods=['GET', 'POST'])
+@app.route('/updateproduto/<int:id>', methods = ['POST', 'GET'])
 def updateproduto(id):
     marcas = Marca.query.all()
     categorias = Categoria.query.all()
     produto = Addproduto.query.get_or_404(id)
+    marca = request.form.get('marca')
+    categoria = request.form.get('categoria')
     form = Addprodutos(request.form)
-    form.name.data = produto.name
+    if request.method=="POST":
+        produto.name = form.name.data
+        produto.price = form.price.data
+        produto.desc = form.discription.data
 
-    return render_template('/produtos/updateproduto.html', title="Atualizar Produtos", form=form,marcas=marcas,categorias=categorias,produto=produto)
+        produto.marca_id = marca
+        produto.categoria_id = categoria
+
+        produto.stock = form.stock.data
+        produto.colors = form.colors.data
+        produto.discount = form.discount.data
+
+        db.session.commit()
+        flash(f'Produto foi atualizado com sucesso', 'success')
+        return redirect('/')
+
+    form.name.data = produto.name
+    form.price.data = produto.price
+    form.discription.data = produto.desc
+    form.stock.data = produto.stock
+    form.colors.data = produto.colors
+    form.discount.data = produto.discount
+
+    return render_template('/produtos/updateproduto.html', title='Atualizar Produtos', form=form,marcas=marcas,categorias=categorias,produto=produto)

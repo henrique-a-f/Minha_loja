@@ -1,11 +1,11 @@
 from flask_wtf.file import FileAllowed,FileField,FileRequired
-from wtforms import Form, IntegerField, StringField, BooleanField, TextAreaField, validators, DecimalField
+from wtforms import Form, SubmitField,IntegerField,FloatField,StringField,BooleanField, TextAreaField, validators, DecimalField
 
 
 class Addprodutos(Form):
     name = StringField('Nome :', [validators.DataRequired()])
     price = DecimalField('Preço :', [validators.DataRequired()])
-    discount = IntegerField('Desconto :', [validators.DataRequired()])
+    discount = IntegerField('Desconto :', default=0)
     stock = IntegerField('Estoque :', [validators.DataRequired()])
     discription = TextAreaField('Descrição :', [validators.DataRequired()])
     colors = TextAreaField('Cor :', [validators.DataRequired()])
